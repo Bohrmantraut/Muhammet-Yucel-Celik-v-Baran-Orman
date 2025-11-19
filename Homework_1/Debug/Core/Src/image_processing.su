@@ -1,0 +1,5 @@
+../Core/Src/image_processing.c:15:6:IMAGE_init	24	static
+../Core/Src/image_processing.c:63:6:IMAGE_apply_negative	24	static
+../Core/Src/image_processing.c:100:6:IMAGE_apply_threshold	40	static
+../Core/Src/image_processing.c:140:6:IMAGE_apply_gamma	48	static
+../Core/Src/image_processing.c:184:6:IMAGE_apply_piecewise_linear	48	static
