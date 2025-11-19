@@ -1,0 +1,5 @@
+../Core/Src/image_processing.c:15:13:sort_9_elements	4
+../Core/Src/image_processing.c:38:6:calculate_histogram	3
+../Core/Src/image_processing.c:62:6:apply_histogram_equalization	4
+../Core/Src/image_processing.c:103:6:apply_2d_convolution	11
+../Core/Src/image_processing.c:163:6:apply_median_filtering	9
