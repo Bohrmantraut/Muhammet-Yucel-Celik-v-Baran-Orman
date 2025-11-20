@@ -141,7 +141,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-    /*while (1)
+    while (1)
     {
         // 1. PC'den görüntü gelmesini bekle (Görüntü pImage_RGB565'e yazılır)
     	if (LIB_SERIAL_IMG_Receive(&img) == SERIAL_OK)
@@ -167,7 +167,7 @@ int main(void)
             // 5. İŞLENMİŞ GÖRÜNTÜYÜ PC'ye Geri Gönder
     	    LIB_SERIAL_IMG_Transmit(&img);
     	}
-    }*/
+    }
 
 
     /* USER CODE BEGIN WHILE */
@@ -201,7 +201,7 @@ int main(void)
     }*/
 
     /* USER CODE BEGIN WHILE */
-    while (1)
+    /*while (1)
     {
         if (LIB_SERIAL_IMG_Receive(&img) == SERIAL_OK)
         {
@@ -228,10 +228,10 @@ int main(void)
             // 4. İşlenmiş Görüntüyü PC'ye Geri Gönder
             LIB_SERIAL_IMG_Transmit(&img);
         }
-    }
+    }*/
 
     /* USER CODE BEGIN WHILE */
-   /* while (1)
+    /*while (1)
     {
         if (LIB_SERIAL_IMG_Receive(&img) == SERIAL_OK)
         {
