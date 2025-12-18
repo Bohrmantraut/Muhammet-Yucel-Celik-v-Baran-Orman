@@ -1,0 +1,13 @@
+../Core/Src/image_processing.c:13:9:compute_otsu_threshold	7
+../Core/Src/image_processing.c:58:6:apply_otsu_threshold	3
+../Core/Src/image_processing.c:71:9:compute_otsu_threshold_gray	7
+../Core/Src/image_processing.c:120:6:apply_otsu_threshold_gray	3
+../Core/Src/image_processing.c:140:6:apply_dilation_gray_3x3	10
+../Core/Src/image_processing.c:183:6:apply_erosion_gray_3x3	10
+../Core/Src/image_processing.c:225:6:apply_opening_gray_3x3	2
+../Core/Src/image_processing.c:254:6:apply_closing_gray_3x3	2
+../Core/Src/image_processing.c:281:6:Apply_Otsu_On_ColorImage_RGB565	2
+../Core/Src/image_processing.c:317:6:Write_Channel_To_RGB565	6
+../Core/Src/image_processing.c:368:6:Extract_Channel_From_RGB565	6
+../Core/Src/image_processing.c:404:6:Convert_Grayscale8bit_To_RGB565	2
+../Core/Src/image_processing.c:423:6:Convert_RGB565_To_Grayscale8bit	2
