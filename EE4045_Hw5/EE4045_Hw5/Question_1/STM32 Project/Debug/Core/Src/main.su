@@ -1,0 +1,9 @@
+../Core/Src/main.c:70:12:ai_init	72	static
+../Core/Src/main.c:87:12:ai_run	32	static
+../Core/Src/main.c:105:13:uart_print	16	static
+../Core/Src/main.c:115:5:main	168	static
+../Core/Src/main.c:193:6:SystemClock_Config	88	static
+../Core/Src/main.c:241:13:MX_CRC_Init	8	static
+../Core/Src/main.c:267:13:MX_USART2_UART_Init	8	static
+../Core/Src/main.c:300:13:MX_GPIO_Init	48	static
+../Core/Src/main.c:342:6:Error_Handler	4	static,ignoring_inline_asm

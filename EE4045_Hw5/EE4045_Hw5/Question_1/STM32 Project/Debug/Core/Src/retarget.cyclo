@@ -1,0 +1,4 @@
+../Core/Src/retarget.c:22:5:_write	3
+../Core/Src/retarget.c:33:5:_read	1
+../Core/Src/retarget.c:40:5:_close	1
+../Core/Src/retarget.c:47:5:_lseek	1

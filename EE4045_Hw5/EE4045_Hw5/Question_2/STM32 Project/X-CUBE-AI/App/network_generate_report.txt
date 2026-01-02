@@ -1,0 +1,179 @@
+ST Edge AI Core v2.2.0-20266 2adc00962
+Created date          : 2026-01-02 22:58:06
+Parameters            : generate --target stm32f4 --name network -m C:/Users/muham/Desktop/Homework_4/mlp_mnist_model.h5 --compression none --verbosity 1 --workspace C:/Users/muham/AppData/Local/Temp/mxAI_workspace315043520679008398239756616760049 --output C:/Users/muham/.stm32cubemx/network_output
+
+Exec/report summary (generate)
+-----------------------------------------------------------------------------------------------------------
+model file         :   C:\Users\muham\Desktop\Homework_4\mlp_mnist_model.h5                                
+type               :   keras                                                                               
+c_name             :   network                                                                             
+compression        :   none                                                                                
+options            :   allocate-inputs, allocate-outputs                                                   
+optimization       :   balanced                                                                            
+target/series      :   stm32f4                                                                             
+workspace dir      :   C:\Users\muham\AppData\Local\Temp\mxAI_workspace315043520679008398239756616760049   
+output dir         :   C:\Users\muham\.stm32cubemx\network_output                                          
+model_fmt          :   float                                                                               
+model_name         :   mlp_mnist_model                                                                     
+model_hash         :   0xd97e90943a614eba86f31fc6a3d6dc5f                                                  
+params #           :   11,910 items (46.52 KiB)                                                            
+-----------------------------------------------------------------------------------------------------------
+input 1/1          :   'input_0', f32(1x7), 28 Bytes, activations                                          
+output 1/1         :   'dense_2', f32(1x10), 40 Bytes, activations                                         
+macc               :   12,260                                                                              
+weights (ro)       :   47,640 B (46.52 KiB) (1 segment)                                                    
+activations (rw)   :   800 B (800 B) (1 segment) *                                                         
+ram (total)        :   800 B (800 B) = 800 + 0 + 0                                                         
+-----------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers are allocated in the activations buffer
+
+Model name - mlp_mnist_model
+------ ------------------------------- ------------- --------------- -------- --------------- --- ----------------- --------------- ------------------------------- 
+m_id   layer (type,original)           oshape        param/size          macc    connected to   | c_size            c_macc          c_type                          
+------ ------------------------------- ------------- --------------- -------- --------------- --- ----------------- --------------- ------------------------------- 
+0      input_0 (Input, None)           [b:1,c:7]                                                | +3,200(+100.0%)   +900(+100.0%)   Dense_/Nonlinearity_[0, 1]      
+       dense_dense (Dense, Dense)      [b:1,c:100]   800/3,200            800         input_0   | -3,200(-100.0%)   -800(-100.0%)   
+       dense (Nonlinearity, Dense)     [b:1,c:100]                        100     dense_dense   |                   -100(-100.0%)   
+------ ------------------------------- ------------- --------------- -------- --------------- --- ----------------- --------------- ------------------------------- 
+1      dense_1_dense (Dense, Dense)    [b:1,c:100]   10,100/40,400     10,100           dense   |                   +100(+1.0%)     Dense_/Nonlinearity_[2, 3]      
+       dense_1 (Nonlinearity, Dense)   [b:1,c:100]                        100   dense_1_dense   |                   -100(-100.0%)   
+------ ------------------------------- ------------- --------------- -------- --------------- --- ----------------- --------------- ------------------------------- 
+2      dense_2_dense (Dense, Dense)    [b:1,c:10]    1,010/4,040        1,010         dense_1   |                   +150(+14.9%)    Dense_/Nonlinearity_[o][4, 5]   
+       dense_2 (Nonlinearity, Dense)   [b:1,c:10]                         150   dense_2_dense   |                   -150(-100.0%)   
+------ ------------------------------- ------------- --------------- -------- --------------- --- ----------------- --------------- ------------------------------- 
+model/c-model: macc=12,260/12,260  weights=47,640/47,640  activations=--/800 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : mlp_mnist_model
+c-name                : network
+c-node #              : 6
+c-array #             : 13
+activations size      : 800 (1 segment)
+weights size          : 47640 (1 segment)
+macc                  : 12260
+inputs                : ['input_0_output']
+outputs               : ['dense_2_output']
+
+C-Arrays (13)
+------ ----------------------- ------------- ------------------------- ------------- --------- 
+c_id   name (*_array)          item/size     domain/mem-pool           c-type        comment   
+------ ----------------------- ------------- ------------------------- ------------- --------- 
+0      dense_1_dense_bias      100/400       weights/weights           const float             
+1      dense_1_dense_output    100/400       activations/**default**   float                   
+2      dense_1_dense_weights   10000/40000   weights/weights           const float             
+3      dense_1_output          100/400       activations/**default**   float                   
+4      dense_2_dense_bias      10/40         weights/weights           const float             
+5      dense_2_dense_output    10/40         activations/**default**   float                   
+6      dense_2_dense_weights   1000/4000     weights/weights           const float             
+7      dense_2_output          10/40         activations/**default**   float         /output   
+8      dense_dense_bias        100/400       weights/weights           const float             
+9      dense_dense_output      100/400       activations/**default**   float                   
+10     dense_dense_weights     700/2800      weights/weights           const float             
+11     dense_output            100/400       activations/**default**   float                   
+12     input_0_output          7/28          activations/**default**   float         /input    
+------ ----------------------- ------------- ------------------------- ------------- --------- 
+
+C-Layers (6)
+------ ---------------- ---- --------------- ------- ------- -------------------------- ------------------ 
+c_id   name (*_layer)   id   layer_type      macc    rom     tensors                    shape (array id)   
+------ ---------------- ---- --------------- ------- ------- -------------------------- ------------------ 
+0      dense_dense      0    Dense           800     3200    I: input_0_output          f32(1x7) (12)      
+                                                             W: dense_dense_weights     f32(100x7) (10)    
+                                                             W: dense_dense_bias        f32(100) (8)       
+                                                             O: dense_dense_output      f32(1x100) (9)     
+------ ---------------- ---- --------------- ------- ------- -------------------------- ------------------ 
+1      dense            0    Nonlinearity    100     0       I: dense_dense_output      f32(1x100) (9)     
+                                                             O: dense_output            f32(1x100) (11)    
+------ ---------------- ---- --------------- ------- ------- -------------------------- ------------------ 
+2      dense_1_dense    1    Dense           10100   40400   I: dense_output            f32(1x100) (11)    
+                                                             W: dense_1_dense_weights   f32(100x100) (2)   
+                                                             W: dense_1_dense_bias      f32(100) (0)       
+                                                             O: dense_1_dense_output    f32(1x100) (1)     
+------ ---------------- ---- --------------- ------- ------- -------------------------- ------------------ 
+3      dense_1          1    Nonlinearity    100     0       I: dense_1_dense_output    f32(1x100) (1)     
+                                                             O: dense_1_output          f32(1x100) (3)     
+------ ---------------- ---- --------------- ------- ------- -------------------------- ------------------ 
+4      dense_2_dense    2    Dense           1010    4040    I: dense_1_output          f32(1x100) (3)     
+                                                             W: dense_2_dense_weights   f32(10x100) (6)    
+                                                             W: dense_2_dense_bias      f32(10) (4)        
+                                                             O: dense_2_dense_output    f32(1x10) (5)      
+------ ---------------- ---- --------------- ------- ------- -------------------------- ------------------ 
+5      dense_2          2    Nonlinearity    150     0       I: dense_2_dense_output    f32(1x10) (5)      
+                                                             O: dense_2_output          f32(1x10) (7)      
+------ ---------------- ---- --------------- ------- ------- -------------------------- ------------------ 
+
+
+
+Number of operations per c-layer
+------- ------ ------------------------ -------- -------------- 
+c_id    m_id   name (type)                   #op           type 
+------- ------ ------------------------ -------- -------------- 
+0       0      dense_dense (Dense)           800   smul_f32_f32 
+1       0      dense (Nonlinearity)          100     op_f32_f32 
+2       1      dense_1_dense (Dense)      10,100   smul_f32_f32 
+3       1      dense_1 (Nonlinearity)        100     op_f32_f32 
+4       2      dense_2_dense (Dense)       1,010   smul_f32_f32 
+5       2      dense_2 (Nonlinearity)        150     op_f32_f32 
+------- ------ ------------------------ -------- -------------- 
+total                                     12,260 
+
+Number of operation types
+---------------- -------- ----------- 
+operation type          #           % 
+---------------- -------- ----------- 
+smul_f32_f32       11,910       97.1% 
+op_f32_f32            350        2.9% 
+
+Complexity report (model)
+------ --------------- ------------------------- ------------------------- -------- 
+m_id   name            c_macc                    c_rom                     c_id     
+------ --------------- ------------------------- ------------------------- -------- 
+0      input_0         ||                 7.3%   ||                 6.7%   [0, 1]   
+1      dense_1_dense   ||||||||||||||||  83.2%   ||||||||||||||||  84.8%   [2, 3]   
+2      dense_2_dense   ||                 9.5%   ||                 8.5%   [4, 5]   
+------ --------------- ------------------------- ------------------------- -------- 
+macc=12,260 weights=47,640 act=800 ram_io=0
+ 
+ Requested memory size by section - "stm32f4" target
+ ------------------------------ ------- -------- ------- ----- 
+ module                            text   rodata    data   bss 
+ ------------------------------ ------- -------- ------- ----- 
+ NetworkRuntime1020_CM4_GCC.a     6,924        0       0     0 
+ network.o                          548       48   1,752   148 
+ network_data.o                      48       16      88     0 
+ lib (toolchain)*                   614       24       0     0 
+ ------------------------------ ------- -------- ------- ----- 
+ RT total**                       8,134       88   1,840   148 
+ ------------------------------ ------- -------- ------- ----- 
+ weights                              0   47,640       0     0 
+ activations                          0        0       0   800 
+ io                                   0        0       0     0 
+ ------------------------------ ------- -------- ------- ----- 
+ TOTAL                            8,134   47,728   1,840   948 
+ ------------------------------ ------- -------- ------- ----- 
+ *  toolchain objects (libm/libgcc*)
+ ** RT AI runtime objects (kernels+infrastructure)
+  
+  Summary - "stm32f4" target
+  ---------------------------------------------------
+               FLASH (ro)      %*   RAM (rw)       % 
+  ---------------------------------------------------
+  RT total         10,062   17.4%      1,988   71.3% 
+  ---------------------------------------------------
+  TOTAL            57,702              2,788         
+  ---------------------------------------------------
+  *  rt/total
+
+
+Generated files (7)
+------------------------------------------------------------------ 
+C:\Users\muham\.stm32cubemx\network_output\network_data_params.h   
+C:\Users\muham\.stm32cubemx\network_output\network_data_params.c   
+C:\Users\muham\.stm32cubemx\network_output\network_data.h          
+C:\Users\muham\.stm32cubemx\network_output\network_data.c          
+C:\Users\muham\.stm32cubemx\network_output\network_config.h        
+C:\Users\muham\.stm32cubemx\network_output\network.h               
+C:\Users\muham\.stm32cubemx\network_output\network.c               
