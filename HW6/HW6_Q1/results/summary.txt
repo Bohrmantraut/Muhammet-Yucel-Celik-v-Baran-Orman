@@ -1,0 +1,4 @@
+SqueezeNet: 0.932000
+EfficientNetB0: 0.857200
+MobileNetV2: 0.384300
+ResNet50: 0.914100
