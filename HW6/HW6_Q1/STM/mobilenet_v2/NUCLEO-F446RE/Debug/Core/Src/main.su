@@ -1,9 +1,0 @@
-../Core/Src/main.c:86:13:uart2_printf	144	static
-../Core/Src/main.c:101:13:PrepareInput	96	static
-../Core/Src/main.c:140:12:AI_Init	8	static
-../Core/Src/main.c:155:16:ArgMax	24	static
-../Core/Src/main.c:169:5:main	16	static
-../Core/Src/main.c:242:6:SystemClock_Config	88	static
-../Core/Src/main.c:284:6:MX_USART2_UART_Init	8	static
-../Core/Src/main.c:303:13:MX_GPIO_Init	48	static
-../Core/Src/main.c:329:6:Error_Handler	4	static,ignoring_inline_asm
