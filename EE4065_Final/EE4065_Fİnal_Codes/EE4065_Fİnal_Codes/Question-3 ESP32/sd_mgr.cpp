@@ -1,0 +1,74 @@
+#include "sd_mgr.h"
+#include "config.h"
+#include "FS.h"
+#include "SD_MMC.h"
+#include "img_converters.h" // Essential for RGB->JPEG conversion
+
+static uint32_t g_counter = 0;
+
+bool sd_init() {
+  if (!SD_MMC.begin("/sdcard", SD_1BIT_MODE, false, SD_FREQ_HZ)) {
+    Serial.println("SD init failed");
+    return false;
+  }
+  if (SD_MMC.cardType() == CARD_NONE) {
+    Serial.println("No SD card attached");
+    return false;
+  }
+  return true;
+}
+
+// Internal helper to write JPEG buffer to SD
+static bool save_buffer_to_sd(uint8_t* buf, size_t len, String &outPath) {
+    char name[32];
+    snprintf(name, sizeof(name), "/IMG_%06lu.jpg", (unsigned long)g_counter++);
+    outPath = String(name);
+
+    File f = SD_MMC.open(outPath.c_str(), FILE_WRITE);
+    if (!f) return false;
+
+    size_t written = f.write(buf, len);
+    f.close();
+    return (written == len);
+}
+
+bool sd_save_frame(camera_fb_t* fb, String &outPath) {
+    if (!fb) return false;
+
+    // Case 1: Already JPEG (Fast path)
+    if (fb->format == PIXFORMAT_JPEG) {
+        return save_buffer_to_sd(fb->buf, fb->len, outPath);
+    }
+
+    // Case 2: RGB565 (Need to compress first)
+    if (fb->format == PIXFORMAT_RGB565) {
+        uint8_t *jpg_buf = NULL;
+        size_t jpg_len = 0;
+        // Convert to JPEG, quality 30 (decent balance)
+        bool ok = fmt2jpg(fb->buf, fb->len, fb->width, fb->height, PIXFORMAT_RGB565, 30, &jpg_buf, &jpg_len);
+        
+        if (!ok) return false;
+        
+        bool saved = save_buffer_to_sd(jpg_buf, jpg_len, outPath);
+        free(jpg_buf); // Important: Free the temporary JPEG buffer
+        return saved;
+    }
+
+    return false; // Unsupported format
+}
+
+bool sd_save_processed(raw_image_t* img, String &outPath) {
+    if (!img || !img->data) return false;
+
+    uint8_t *jpg_buf = NULL;
+    size_t jpg_len = 0;
+    
+    // Convert our custom struct data to JPEG
+    bool ok = fmt2jpg(img->data, img->len, img->width, img->height, PIXFORMAT_RGB565, 30, &jpg_buf, &jpg_len);
+    
+    if (!ok) return false;
+
+    bool saved = save_buffer_to_sd(jpg_buf, jpg_len, outPath);
+    free(jpg_buf);
+    return saved;
+}
